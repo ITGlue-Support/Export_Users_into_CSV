@@ -4,7 +4,7 @@ $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
  
 $headers.Add("Content-Type", "application/vnd.api+json")
  
-$headers.Add("x-api-key", "ITG.f52627ad7268c88f12e313a62e4685d8.MGXpYGDhWGrQ8mv3HqVwd-pES8RJmMsWDbpm9p4gTRRTIwAZsef9DjAT5f9HBRWe")
+$headers.Add("x-api-key", "Enter your API key")
 $response = Invoke-RestMethod 'https://api.itglue.com/users?page[size]=100' -Method 'GET' -Headers $headers
  
 $exportresponse = $response | ConvertTo-Json
