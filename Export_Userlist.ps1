@@ -4,7 +4,7 @@ $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
  
 $headers.Add("Content-Type", "application/vnd.api+json")
  
-$headers.Add("x-api-key", "Enter your API key")
+$headers.Add("x-api-key", "ITG.5feb2d3811d61c01e54bb51f21cdcf61.rTMNharnGFPTGH5UehCztTIu_q1IhP1rDdnh16iXbUecTQ2exGEOU-ali-kzj55V")
 $response = Invoke-RestMethod 'https://api.itglue.com/users?page[size]=100' -Method 'GET' -Headers $headers
  
 $exportresponse = $response | ConvertTo-Json
@@ -20,7 +20,8 @@ $getrole = $item.attributes | ConvertTo-Json | Select-String -Pattern 'role-name
 $getcreateat = $item.attributes | ConvertTo-Json | Select-String -Pattern 'created-at=(\d*-\d*-\d*[A-Z]\d*:\d*:\d*)' | ForEach-Object {$_.matches.groups[1].value}
 $getlastlogin = $item.attributes | ConvertTo-Json | Select-String -Pattern 'last-sign-in-at=(\d*-\d*-\d*[A-Z]\d*:\d*:\d*)' | ForEach-Object {$_.matches.groups[1].value}
 $getmyglueinfo = $item.attributes | ConvertTo-Json | Select-String -Pattern 'my-glue=(\w*)' | ForEach-Object {$_.matches.groups[1].value}
-Write-Host $getname" "$getemail" "$getrole" "$getcreatedat" "$getmyglueinfo
+
+$csvfile | select @{N="Name";E={$getname}},@{N="email";E={$getemail}},@{N="Role";E={$getrole}},@{N="CreatedAt";E={$getcreateat}},@{N="MyGlueUser";E={$getmyglueinfo}}, @{N="LastLogin";E={$getlastlogin}}
  
 $csvfile | select @{N="Name";E={$getname}},@{N="email";E={$getemail}},@{N="Role";E={$getrole}},@{N="CreatedAt";E={$getcreateat}},@{N="MyGlueUser";E={$getmyglueinfo}}, @{N="LastLogin";E={$getlastlogin}} | export-CSV userlist.csv -Append -NoTypeInformation
 }
